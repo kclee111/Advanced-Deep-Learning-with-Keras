@@ -98,5 +98,8 @@ for fpath in font_files:
     fm.fontManager.addfont(fpath)
 
 # 폰트 설정
-matplotlib.rcParams["font.family"] = ["DejaVu Sans", "NanumBarunGothic"]
-matplotlib.rcParams["axes.unicode_minus"] = False
+def set_font(font: str = "NanumBarunGothic"):
+    matplotlib.rcParams["font.family"] = ["DejaVu Sans", font]
+    matplotlib.rcParams["axes.unicode_minus"] = False
+
+set_font()
