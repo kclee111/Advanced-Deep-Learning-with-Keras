@@ -103,3 +103,9 @@ def set_font(font: str = "NanumBarunGothic"):
     matplotlib.rcParams["axes.unicode_minus"] = False
 
 set_font()
+api_key = dotdict()
+api_key.polygon = "xvPe15eQI1f0jbwJWmETWyLdZUgowTgT"
+api_key.alpha_vantage = "L9BJ9D92PQJO0R2Q"
+api_key.intrinio = "OjBlNjZkMWRhMTM0ZjM1MzI0M2RiOWIxZGNjY2Y5YWQy"
+api_key.nasdaqdatalink = "n29yrod1VqBxiC6k18e8"
+
