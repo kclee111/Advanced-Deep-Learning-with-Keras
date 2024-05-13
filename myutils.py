@@ -61,7 +61,7 @@ def attr(obj):
         if not attribute.startswith("_"):
             try:
                 all_attr[attribute] = getattr(obj, attribute)
-            except AttributeError:
+            except Exception as e:
                 continue
 
     methods = dict([(k, v) for k, v in all_attr.items() if callable(v)])
@@ -71,7 +71,7 @@ def attr(obj):
         if callable(v):
             try:
                 signatures[k] = inspect.signature(v)  # may occur ValueError
-            except ValueError:
+            except Exception as e:
                 signatures[k] = "No signature available for built-in method"
 
     state_keys = sorted(list(set(all_attr.keys()) - set(methods.keys())))
