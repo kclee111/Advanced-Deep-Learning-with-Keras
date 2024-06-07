@@ -103,6 +103,11 @@ def set_font(font: str = "NanumBarunGothic"):
     matplotlib.rcParams["font.family"] = ["DejaVu Sans", font]
     matplotlib.rcParams["axes.unicode_minus"] = False
 
+# insert row
+def insert_row(df: pd.DataFrame, row) -> pd.DataFrame:
+    df[len(df)] = row
+    return df.reset_index(drop=True)
+
 set_font()
 api_key = dotdict()
 
