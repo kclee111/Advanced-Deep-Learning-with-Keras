@@ -1,6 +1,8 @@
 import os
 import sys
 import inspect
+import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from pathlib import Path
 import matplotlib
