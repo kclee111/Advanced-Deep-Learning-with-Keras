@@ -56,6 +56,13 @@ class dotdict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
+    def __getitem__(self, index):
+        if isinstance(index, (int, slice)):
+            items = list(self.values())
+            return items[index]
+        else:
+            return dict.__getitem__(self, index)
+
 
 def attr(obj):
     """Returns obj's state_types, callable_signatures, state_values, and callables_bounded"""
@@ -81,11 +88,11 @@ def attr(obj):
     state_types = dict([(k, type(getattr(obj, k))) for k in state_keys])
     state_values = dict([(k, getattr(obj, k)) for k in state_keys])
 
-    return (
-        dotdict(state_types),
-        dotdict(signatures),
-        dotdict(state_values),
-        dotdict(methods),
+    return dotdict(
+        a=dotdict(state_types),
+        b=dotdict(signatures),
+        c=dotdict(state_values),
+        d=dotdict(methods),
     )
 
 
