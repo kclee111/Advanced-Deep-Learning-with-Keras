@@ -125,3 +125,14 @@ api_key.alpha_vantage = "L9BJ9D92PQJO0R2Q"
 api_key.intrinio = "OjBlNjZkMWRhMTM0ZjM1MzI0M2RiOWIxZGNjY2Y5YWQy"
 api_key.nasdaqdatalink = "n29yrod1VqBxiC6k18e8"
 # print(f"api_key: \n{api_key}")
+
+import pymc as pm
+import pymc.math as pmath
+import pytensor.tensor as tt
+import xarray as xr
+
+pmstack = lambda x: x.stack(sample=("chain", "draw")).transpose("sample", ...)
+def kv(obj):
+    for k, v in obj.items():
+        print(f"{k}:\n{v}")
+        print()
