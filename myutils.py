@@ -63,6 +63,9 @@ class dotdict(dict):
         else:
             return dict.__getitem__(self, index)
 
+    def tolist(self):
+        return list(self.keys())
+
 
 def attr(obj):
     """Returns obj's state_types, callable_signatures, state_values, and callables_bounded"""
