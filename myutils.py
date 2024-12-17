@@ -150,3 +150,10 @@ def kv(obj):
     for k, v in obj.items():
         print(f"{k}:\n{v}")
         print()
+
+def itemsview(obj: dict):
+    try:
+        for k, v in obj.items():
+            print(f"{k} -> {v}")
+    except AttributeError:
+        print(f"obj is not dict -> {type(obj)}")
