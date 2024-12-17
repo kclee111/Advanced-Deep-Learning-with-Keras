@@ -66,6 +66,17 @@ class dotdict(dict):
     def tolist(self):
         return list(self.keys())
 
+    to_list = tolist
+
+    def filter(self, substr: str):
+        return [key for key in self.keys() if substr in str(key)]
+
+    def isupper(self):
+        return [key for key in self.keys() if key[0].isupper()]
+
+    def islower(self):
+        return [key for key in self.keys() if key[0].islower()]
+
 
 def attr(obj):
     """Returns obj's state_types, callable_signatures, state_values, and callables_bounded"""
