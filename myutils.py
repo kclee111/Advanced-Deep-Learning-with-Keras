@@ -126,19 +126,12 @@ def set_font(font: str = "NanumBarunGothic"):
     matplotlib.rcParams["font.family"] = ["DejaVu Sans", font]
     matplotlib.rcParams["axes.unicode_minus"] = False
 
+set_font()
+
 # insert row
 def insert_row(df: pd.DataFrame, row) -> pd.DataFrame:
     df[len(df)] = row
     return df.reset_index(drop=True)
-
-set_font()
-api_key = dotdict()
-
-api_key.polygon = "xvPe15eQI1f0jbwJWmETWyLdZUgowTgT"
-api_key.alpha_vantage = "L9BJ9D92PQJO0R2Q"
-api_key.intrinio = "OjBlNjZkMWRhMTM0ZjM1MzI0M2RiOWIxZGNjY2Y5YWQy"
-api_key.nasdaqdatalink = "n29yrod1VqBxiC6k18e8"
-# print(f"api_key: \n{api_key}")
 
 # import pymc as pm
 # import pymc.math as pmath
