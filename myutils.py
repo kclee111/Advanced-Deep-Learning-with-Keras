@@ -42,7 +42,7 @@ def read_excel(file, **kwargs) -> pd.DataFrame:
         df = pd.read_excel(github_url + file, **kwargs)
     return df
 
-
+import json
 class dotdict(dict):
     """
     a dictionary that supports dot notation
@@ -56,6 +56,9 @@ class dotdict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
+    def __repr__(self):
+        return json.dumps(self, indent=2, default=str)
+    
     def __getitem__(self, index):
         if isinstance(index, (int, slice)):
             items = list(self.values())
