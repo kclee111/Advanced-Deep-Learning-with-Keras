@@ -84,6 +84,20 @@ class dotdict(dict):
     def islower(self):
         return dotdict([(k, v) for k, v in self.items() if k[0].islower()])
 
+    def isin(self, keys):
+        if isinstance(keys, dict):
+            keys = list(keys.keys())
+        else:
+            keys = list(keys)
+        return dotdict([(k, v) for k, v in self.items() if k in keys])
+
+    def isnotin(self, keys):
+        if isinstance(keys, dict):
+            keys = list(keys.keys())
+        else:
+            keys = list(keys)
+        return dotdict([(k, v) for k, v in self.items() if not k in keys])
+
 
 def attr(obj):
     """Returns obj's state_types, callable_signatures, state_values, and callables_bounded"""
