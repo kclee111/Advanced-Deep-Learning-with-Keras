@@ -1,6 +1,7 @@
 import os
 import sys
 import inspect
+from typing import Callable, Union
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
@@ -71,14 +72,17 @@ class dotdict(dict):
 
     to_list = tolist
 
-    def filter(self, substr: str):
-        return [key for key in self.keys() if substr in str(key)]
+    def filter(self, key_filter: Union[str, Callable]):
+        if callable(key_filter):
+            return dotdict([(k, v) for k, v in self.items() if key_filter(k)])
+        elif isinstance(key_filter, str):
+            return dotdict([(k, v) for k, v in self.items()  if key_filter in str(k)])
 
     def isupper(self):
-        return [key for key in self.keys() if key[0].isupper()]
+        return dotdict([(k, v) for k, v in self.items() if k[0].isupper()])
 
     def islower(self):
-        return [key for key in self.keys() if key[0].islower()]
+        return dotdict([(k, v) for k, v in self.items() if k[0].islower()])
 
 
 def attr(obj):
