@@ -12,19 +12,38 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-# Simple way to get the OS name (e.g., 'posix', 'nt', 'java')
+
 if os.name == "nt":
-    plt.rcParams["font.family"] = "Malgun Gothic"  # 윈도우 환경에서 plt 폰트를 맑은 고딕으로 설정
+    try:
+        # 폰트 경로 설정
+        font_path = "C:\\Users\\kclee\\AppData\\Local\\Microsoft\\Windows\\Fonts"
+        # 폰트 이름 가져오기
+        font_files = matplotlib.font_manager.findSystemFonts(fontpaths=font_path)
+        for fpath in font_files:
+            matplotlib.font_manager.fontManager.addfont(fpath)
+
+        # 폰트 설정
+        matplotlib.rcParams["font.family"] = ["DejaVu Sans", "NanumBarunGothic"]
+        print(f"Matplotlib: Windows 나눔바른고딕 폰트로 설정되었습니다.")
+
+    except:
+        plt.rcParams["font.family"] = ["DejaVu Sans", "Malgun Gothic"]
+        print(f"Matplotlib: 맑은고딕 폰트로 설정되었습니다.")
 else:
+    font_files = matplotlib.font_manager.findSystemFonts(fontpaths="/usr/share/fonts/truetype")
+    for fpath in font_files:
+        matplotlib.font_manager.fontManager.addfont(fpath)
     fm = matplotlib.font_manager.FontManager()
-    if "NanumGothic" in fm.get_font_names():
-        plt.rcParams["font.family"] = "NanumGothic"  # 리눅스 환경에서 나눔고딕 폰트가 있으면 설정
+    if "NanumBarunGothic" in fm.get_font_names():
+        matplotlib.rcParams["font.family"] = ["DejaVu Sans", "NanumBarunGothic"]  # 리눅스 환경에서 나눔바른고딕 폰트가 있으면 설정
+        print(f"Matplotlib: Ubuntu 나눔바른고딕 폰트로 설정되었습니다.")
     else:
-        print(f"Matplotlib 그래프 객체에서 한글이 지원되지 않습니다.")
+        print(f"In Ubuntu Matplotlib 그래프 객체에서 한글이 지원되지 않습니다.")
+
+matplotlib.rcParams["axes.unicode_minus"] = False
 
 local_folder = Path("datatest")
 github_url = "https://raw.githubusercontent.com/dglee6257/Dataprocessing/main/datatest/"
-
 
 def read_csv(file, **kwargs) -> pd.DataFrame:
     """read csv file from local folder if exists, otherwise from github folder"""
@@ -59,7 +78,7 @@ class dotdict(dict):
 
     def __repr__(self):
         return json.dumps(self, indent=2, default=str)
-    
+
     def __getitem__(self, index):
         if isinstance(index, (int, slice)):
             items = list(self.values())
@@ -98,7 +117,6 @@ class dotdict(dict):
             keys = list(keys)
         return dotdict([(k, v) for k, v in self.items() if not k in keys])
 
-
 def attr(obj):
     """Returns obj's state_types, callable_signatures, state_values, and callables_bounded"""
     all_attr = {}
@@ -129,25 +147,6 @@ def attr(obj):
         c=dotdict(state_values),
         d=dotdict(methods),
     )
-
-
-# import matplotlib as mpl
-import matplotlib.font_manager as fm
-# import matplotlib.pyplot as plt
-
-# 폰트 경로 설정
-font_path = "C:\\Users\\kclee\\AppData\\Local\\Microsoft\\Windows\\Fonts"
-# 폰트 이름 가져오기
-font_files = fm.findSystemFonts(fontpaths=font_path)
-for fpath in font_files:
-    fm.fontManager.addfont(fpath)
-
-# 폰트 설정
-def set_font(font: str = "NanumBarunGothic"):
-    matplotlib.rcParams["font.family"] = ["DejaVu Sans", font]
-    matplotlib.rcParams["axes.unicode_minus"] = False
-
-set_font()
 
 # insert row
 def insert_row(df: pd.DataFrame, row) -> pd.DataFrame:
