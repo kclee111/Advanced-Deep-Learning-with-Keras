@@ -168,3 +168,11 @@ def read_yaml(filename):
         args = yaml.load(f, Loader=loader)
     return args
 
+# for transformers
+import transformers
+import logging
+transformers.logging.get_logger().setLevel(level=logging.WARNING)
+os.environ['HF_HOME'] = 'D:/huggingface_cache'
+# os.environ['TRANSFORMERS_VERBOSITY'] = 'error'
+# login password
+# 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
