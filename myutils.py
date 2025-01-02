@@ -42,26 +42,6 @@ else:
 
 matplotlib.rcParams["axes.unicode_minus"] = False
 
-local_folder = Path("datatest")
-github_url = "https://raw.githubusercontent.com/dglee6257/Dataprocessing/main/datatest/"
-
-def read_csv(file, **kwargs) -> pd.DataFrame:
-    """read csv file from local folder if exists, otherwise from github folder"""
-    try:
-        df = pd.read_csv(local_folder / file, **kwargs)
-    except FileNotFoundError:
-        df = pd.read_csv(github_url + file, **kwargs)
-    return df
-
-
-def read_excel(file, **kwargs) -> pd.DataFrame:
-    """read excel file from local folder if exists, otherwise from github folder"""
-    try:
-        df = pd.read_excel(local_folder / file, **kwargs)
-    except FileNotFoundError:
-        df = pd.read_excel(github_url + file, **kwargs)
-    return df
-
 import json
 class dotdict(dict):
     """
@@ -213,3 +193,21 @@ def read_yaml(file_path):
         print(f"Error: File not found: {file_path}")
     except yaml.YAMLError as e:
         print(f"Error parsing YAML file: {e}")
+
+from IPython.core.display import HTML
+HTML(r"""
+<style>
+    * {
+    #     #color: red;
+    #     #font-family: ‘Cascadia Code PL’;#,‘Courier New’, Courier, monospace;
+    #     font-family: "Consolas" !important;
+        font-size: 18px !important;
+        line-height: 1.2 !important;
+    }
+    .output-plaintext, .output-stream, .output {
+        font-family: "Consolas" !important; # Any monospaced font should work
+        # line-height: 1.3 !important;
+        # font-size: 12px !important;
+    }
+</style>
+""")
