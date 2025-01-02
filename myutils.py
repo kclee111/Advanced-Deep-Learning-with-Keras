@@ -139,17 +139,14 @@ def insert_row(df: pd.DataFrame, row) -> pd.DataFrame:
 # import xarray as xr
 
 pmstack = lambda x: x.stack(sample=("chain", "draw")).transpose("sample", ...)
+
 def kv(obj):
     for k, v in obj.items():
         print(f"{k}:\n{v}")
         print()
 
-def itemsview(obj: dict):
-    try:
-        for k, v in obj.items():
-            print(f"{k} -> {v}")
-    except AttributeError:
-        print(f"obj is not dict -> {type(obj)}")
+def jd(obj: dict):
+    print(json.dumps(obj, indent=2, default=str))
 
 import yaml
 import re
