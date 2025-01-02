@@ -154,45 +154,22 @@ def itemsview(obj: dict):
 import yaml
 import re
 
-def read_yaml(file_path):
-    """
-    Loads a YAML file and substitutes environment variables where placeholders are defined.
+def read_yaml(filename):
+    loader = yaml.SafeLoader
+    loader.add_implicit_resolver(
+        u'tag:yaml.org,2002:float',
+        re.compile(u'''^(?:
+        [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+        |[-+]?\\.(?:inf|Inf|INF)
+        |\\.(?:nan|NaN|NAN))$''', re.X),
+        list(u'-+0123456789.'))
 
-    :param file_path: Path to the YAML file.
-    :return: Dictionary with resolved YAML content.
-    """
-    pattern = re.compile(r'\$\{(\w+)\}')  # Matches ${ENV_VAR}
-
-    def resolve_env_vars(value):
-        """Substitutes environment variables in the string."""
-        if isinstance(value, str):
-            matches = pattern.findall(value)
-            for match in matches:
-                env_value = os.getenv(match, None)
-                if env_value is None:
-                    raise ValueError(f"Environment variable {match} is not set.")
-                value = value.replace(f"${{{match}}}", env_value)
-        return value
-
-    try:
-        with open(file_path, 'r') as file:
-            data = yaml.safe_load(file)
-
-        # Recursively resolve environment variables in the loaded YAML data
-        def resolve_dict(obj):
-            if isinstance(obj, dict):
-                return {key: resolve_dict(value) for key, value in obj.items()}
-            elif isinstance(obj, list):
-                return [resolve_dict(item) for item in obj]
-            else:
-                return resolve_env_vars(obj)
-
-        return resolve_dict(data)
-
-    except FileNotFoundError:
-        print(f"Error: File not found: {file_path}")
-    except yaml.YAMLError as e:
-        print(f"Error parsing YAML file: {e}")
+    with open(filename, 'r') as f:
+        args = yaml.load(f, Loader=loader)
+    return args
 
 from IPython.core.display import HTML
 HTML(r"""
