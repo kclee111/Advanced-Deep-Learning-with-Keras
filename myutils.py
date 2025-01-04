@@ -172,7 +172,14 @@ def read_yaml(filename):
 import transformers
 import logging
 transformers.logging.get_logger().setLevel(level=logging.WARNING)
-os.environ['HF_HOME'] = 'D:/huggingface_cache'
+
+if os.name == "nt":
+    os.environ['HF_HOME'] = 'D:/huggingface_cache'
+else:
+    os.environ['HF_HOME'] = '/mnt/d/huggingface_cache'
 # os.environ['TRANSFORMERS_VERBOSITY'] = 'error'
-# login password
+
+# login password for ocstdj
 # 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
+# kclee
+# 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
