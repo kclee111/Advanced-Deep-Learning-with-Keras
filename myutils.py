@@ -9,7 +9,7 @@ from pathlib import Path
 import matplotlib
 import matplotlib.pyplot as plt
 import warnings
-from importlib import reload
+from IPython.lib.deepreload import reload as dreload
 
 warnings.filterwarnings("ignore")
 
